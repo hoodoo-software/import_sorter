@@ -1,3 +1,9 @@
+## Hoodoo fork of `import_sorter`
+
+To set it up, see instructions on the [INSTALL documentation](https://github.com/hoodoo-software/import_sorter/blob/master/INSTALL.md)
+
+## Original README
+
 <!-- DO NOT REMOVE - contributor_list:data:start:["gleich", "lig", "bartekpacia", "ImgBotApp", "jlnrrg", "vHanda", "lsaudon"]:end -->
 
 ```txt

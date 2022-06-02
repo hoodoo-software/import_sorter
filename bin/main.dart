@@ -24,7 +24,17 @@ void main(List<String> args) {
     local_args.outputHelp();
   }
 
-  final currentPath = Directory.current.path;
+  String currentPath;
+  try {
+    final targetFile = args.firstWhere((element) => element.endsWith(".dart"));
+    var partToRemove = targetFile.split('/lib').last;
+    if (partToRemove == targetFile) throw 'Path is not in a lib folder';
+    currentPath =
+        targetFile.substring(0, targetFile.length - partToRemove.length - 4);
+  } catch (_) {
+    currentPath = Directory.current.path;
+  }
+
   /*
   Getting the package name and dependencies/dev_dependencies
   Package name is one factor used to identify project imports
@@ -45,7 +55,7 @@ void main(List<String> args) {
   dependencies.addAll(pubspecLock['packages'].keys);
 
   var emojis = false;
-  var noComments = false;
+  var noComments = true;
   final ignored_files = [];
 
   // Reading from config in pubspec.yaml safely

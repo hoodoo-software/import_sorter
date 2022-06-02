@@ -28,6 +28,9 @@ ImportSortData sortImports(
   final dartImports = <String>[];
   final flutterImports = <String>[];
   final packageImports = <String>[];
+  final hoodooTestImports = <String>[];
+  final hoodooDepsImports = <String>[];
+  final hoodooImports = <String>[];
   final projectRelativeImports = <String>[];
   final projectImports = <String>[];
 
@@ -35,6 +38,9 @@ ImportSortData sortImports(
       dartImports.isEmpty &&
       flutterImports.isEmpty &&
       packageImports.isEmpty &&
+      hoodooTestImports.isEmpty &&
+      hoodooDepsImports.isEmpty &&
+      hoodooImports.isEmpty &&
       projectImports.isEmpty &&
       projectRelativeImports.isEmpty;
 
@@ -57,6 +63,12 @@ ImportSortData sortImports(
         flutterImports.add(lines[i]);
       } else if (lines[i].contains('package:$package_name/')) {
         projectImports.add(lines[i]);
+      } else if (lines[i].contains('package:hoodoo_test')) {
+        hoodooTestImports.add(lines[i]);
+      } else if (lines[i].contains('package:hoodoo_deps')) {
+        hoodooDepsImports.add(lines[i]);
+      } else if (lines[i].contains('package:hoodoo_')) {
+        hoodooImports.add(lines[i]);
       } else if (lines[i].contains('package:')) {
         packageImports.add(lines[i]);
       } else {
@@ -124,10 +136,43 @@ ImportSortData sortImports(
     packageImports.sort();
     sortedLines.addAll(packageImports);
   }
-  if (projectImports.isNotEmpty || projectRelativeImports.isNotEmpty) {
+  if (hoodooTestImports.isNotEmpty) {
     if (dartImports.isNotEmpty ||
         flutterImports.isNotEmpty ||
         packageImports.isNotEmpty) {
+      sortedLines.add('');
+    }
+    hoodooTestImports.sort();
+    sortedLines.addAll(hoodooTestImports);
+  }
+  if (hoodooDepsImports.isNotEmpty) {
+    if (dartImports.isNotEmpty ||
+        flutterImports.isNotEmpty ||
+        packageImports.isNotEmpty ||
+        hoodooTestImports.isNotEmpty) {
+      sortedLines.add('');
+    }
+    hoodooDepsImports.sort();
+    sortedLines.addAll(hoodooDepsImports);
+  }
+  if (hoodooImports.isNotEmpty) {
+    if (dartImports.isNotEmpty ||
+        flutterImports.isNotEmpty ||
+        packageImports.isNotEmpty ||
+        hoodooTestImports.isNotEmpty ||
+        hoodooDepsImports.isNotEmpty) {
+      sortedLines.add('');
+    }
+    hoodooImports.sort();
+    sortedLines.addAll(hoodooImports);
+  }
+  if (projectImports.isNotEmpty || projectRelativeImports.isNotEmpty) {
+    if (dartImports.isNotEmpty ||
+        flutterImports.isNotEmpty ||
+        packageImports.isNotEmpty ||
+        hoodooTestImports.isNotEmpty ||
+        hoodooDepsImports.isNotEmpty ||
+        hoodooImports.isNotEmpty) {
       sortedLines.add('');
     }
     if (!noComments) sortedLines.add(projectImportComment(emojis));
